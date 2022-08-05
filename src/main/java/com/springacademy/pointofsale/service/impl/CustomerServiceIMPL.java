@@ -4,6 +4,7 @@ import com.springacademy.pointofsale.dto.CustomerDTO;
 import com.springacademy.pointofsale.dto.request.CustomerSaveRequest;
 import com.springacademy.pointofsale.dto.request.CustomerUpdateNameDTO;
 import com.springacademy.pointofsale.dto.request.CustomerUpdateRequestDTO;
+import com.springacademy.pointofsale.dto.response.CustomerSalaryNameDTO;
 import com.springacademy.pointofsale.dto.response.ResponseActiveCustomerDTO;
 import com.springacademy.pointofsale.entity.Customer;
 import com.springacademy.pointofsale.repo.CustomerRepo;
@@ -175,6 +176,45 @@ public class CustomerServiceIMPL implements CustomerService {
             return "customer not found";
         }
 
+    }
+
+    @Override
+    public CustomerDTO getCustomerByNic(String nic) throws NotFoundException {
+        Optional<Customer> customer = customerRepo.findByNic(nic);
+        if (customer.isPresent()) {
+            CustomerDTO customerDTO = modelMapper.map(customer.get(),CustomerDTO.class);
+            return customerDTO;
+        } else {
+            throw new NotFoundException("no results");
+        }
+    }
+
+    @Override
+    public CustomerSalaryNameDTO getCustomerSalaryAndAddressById(int id) {
+        Optional<Customer> customer = customerRepo.findById(id);
+        if (customer.isPresent()) {
+            CustomerSalaryNameDTO customerDTO = customerMapper.customerDto(customer.get());
+            return customerDTO;
+
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public CustomerDTO getCustomerDetailsByStatus(int id) throws NotFoundException {
+        Optional<Customer> customer = customerRepo.findById(id);
+        if (customer.isPresent() && customer.get().isActiveState()) {
+
+            CustomerDTO customerDTO = customerMapper.enitityToDto(customer.get());
+            return customerDTO;
+
+        }else if(customer.isPresent() && !(customer.get().isActiveState())) {
+            throw new NotFoundException("this is inactive customer");
+        }
+        else {
+            return null;
+        }
     }
 }
 

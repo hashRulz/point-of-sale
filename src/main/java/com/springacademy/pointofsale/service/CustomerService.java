@@ -4,6 +4,7 @@ import com.springacademy.pointofsale.dto.CustomerDTO;
 import com.springacademy.pointofsale.dto.request.CustomerSaveRequest;
 import com.springacademy.pointofsale.dto.request.CustomerUpdateNameDTO;
 import com.springacademy.pointofsale.dto.request.CustomerUpdateRequestDTO;
+import com.springacademy.pointofsale.dto.response.CustomerSalaryNameDTO;
 import com.springacademy.pointofsale.dto.response.ResponseActiveCustomerDTO;
 import javassist.NotFoundException;
 
@@ -27,4 +28,10 @@ public interface CustomerService {
     List<ResponseActiveCustomerDTO> getCustomerByActiveStatusOnlyName() throws NotFoundException;
 
     String updateCustomerByName(CustomerUpdateNameDTO customerUpdateNameDTO, int id);
+
+    CustomerDTO getCustomerByNic(String nic) throws NotFoundException;
+
+    CustomerSalaryNameDTO getCustomerSalaryAndAddressById(int id);
+
+    CustomerDTO getCustomerDetailsByStatus(int id) throws NotFoundException;
 }

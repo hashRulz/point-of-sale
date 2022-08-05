@@ -4,6 +4,7 @@ import com.springacademy.pointofsale.dto.CustomerDTO;
 import com.springacademy.pointofsale.dto.request.CustomerSaveRequest;
 import com.springacademy.pointofsale.dto.request.CustomerUpdateNameDTO;
 import com.springacademy.pointofsale.dto.request.CustomerUpdateRequestDTO;
+import com.springacademy.pointofsale.dto.response.CustomerSalaryNameDTO;
 import com.springacademy.pointofsale.dto.response.ResponseActiveCustomerDTO;
 import com.springacademy.pointofsale.service.CustomerService;
 import javassist.NotFoundException;
@@ -77,5 +78,25 @@ public class CustomerController {
         String updated = customerService.updateCustomerByName(customerUpdateNameDTO,id);
         return updated;
     }
+
+    @GetMapping(path = {"/get-by-nic"}, params = {"nic"})
+    public CustomerDTO getCustomerByNic(@RequestParam(value = "nic") String nic) throws NotFoundException {
+        CustomerDTO customerDTO = customerService.getCustomerByNic(nic);
+        return customerDTO;
+    }
+
+    @GetMapping(path = "/get-salary-address-id", params = "id")
+    public CustomerSalaryNameDTO getCustomerSalaryAndAddressById(@RequestParam(value = "id") int id) {
+        CustomerSalaryNameDTO customerDTO = customerService.getCustomerSalaryAndAddressById(id);
+        return customerDTO;
+    }
+
+    @GetMapping(path = "/get-customer-details-by-status/{id}")
+    public CustomerDTO getCustomerDetailsByStatus(@PathVariable (value = "id") int id) throws NotFoundException {
+        CustomerDTO customerDTO= customerService.getCustomerDetailsByStatus(id);
+        return customerDTO;
+    }
+
+
 
 }

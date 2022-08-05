@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @EnableJpaRepositories
 @Repository
@@ -17,6 +18,8 @@ import java.util.List;
 public interface CustomerRepo extends JpaRepository<Customer,Integer> {
 
     List<Customer> findAllByCustomerNameEquals(String name);
+
+    Optional<Customer> findByNic(String nic);
 
     List<Customer> findAllByActiveState(boolean b);
 
