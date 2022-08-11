@@ -7,6 +7,7 @@ import com.springacademy.pointofsale.dto.request.CustomerUpdateRequestDTO;
 import com.springacademy.pointofsale.dto.response.CustomerSalaryNameDTO;
 import com.springacademy.pointofsale.dto.response.ResponseActiveCustomerDTO;
 import com.springacademy.pointofsale.entity.Customer;
+import com.springacademy.pointofsale.exception.EntryNotFoundException;
 import com.springacademy.pointofsale.repo.CustomerRepo;
 import com.springacademy.pointofsale.service.CustomerService;
 import com.springacademy.pointofsale.util.mappers.CustomerMapper;
@@ -173,7 +174,8 @@ public class CustomerServiceIMPL implements CustomerService {
             return "updated"+id;
         }else{
             System.out.println("customer not found");
-            return "customer not found";
+//            return "customer not found";
+            throw new EntryNotFoundException("not found in database");
         }
 
     }
@@ -185,7 +187,7 @@ public class CustomerServiceIMPL implements CustomerService {
             CustomerDTO customerDTO = modelMapper.map(customer.get(),CustomerDTO.class);
             return customerDTO;
         } else {
-            throw new NotFoundException("no results");
+            throw new com.springacademy.pointofsale.exception.NotFoundException("no results");
         }
     }
 
